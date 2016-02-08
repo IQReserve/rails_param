@@ -14,7 +14,7 @@ module RailsParam
 
     def param!(name, type, options = {}, &block)
       name = name.to_s unless name.is_a? Integer # keep index for validating elements
-      
+
       return unless params.member?(name) || check_param_presence?(options[:default]) || options[:required]
 
       begin
@@ -94,7 +94,7 @@ module RailsParam
           return BigDecimal.new(param, (options[:precision] || DEFAULT_PRECISION))
         end
         return nil
-      rescue ArgumentError
+      rescue ArgumentError, NoMethodError
         raise InvalidParameterError, "'#{param}' is not a valid #{type}"
       end
     end
